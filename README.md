@@ -7,6 +7,7 @@ and should work on Linux, FreeBSD & OSX.
 
 You can expect this from the installation process:
 
+0. Guidelines to install common dependencies
 1. **rbenv** will be installed in `~/.rbenv`.
 2. **ruby-build** will be installed in `~/.rbenv/plugins`.
 3. **ruby-1.9.3-p125** will be compiled in `~/.rbenv/versions/1.9.3-p125`.
@@ -25,5 +26,10 @@ Open a terminal and run this command (review script [here](https://raw.github.co
 1. `git clone https://github.com/goodtouch/rbenv-ruby-install.git`
 2. `cd rbenv-ruby-install`
 3. `./install`
+
+## Uninstall
+
+1. `rm -rf ~/.rbenv`
+2. remove `export PATH="$HOME/.rbenv/bin:$PATH"` and `eval "$(rbenv init -)"` from your `~/.zshenv`, `~/.zshrc` or `~/.bash_profile`
 
 Enjoy !
