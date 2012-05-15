@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+[[ -z "$VERSION" ]] && VERSION=1.9.3-p125
+RBENV_ROOT="$HOME/.tmprbenv"
+
+# Create the rbenv directory structure if it doesn't already exist.
+
+mkdir -p "$RBENV_ROOT"
+cd "$RBENV_ROOT"
+
+# Download the requested version of rbenv-ruby-install
+
+echo "*** Downloading rbenv-ruby-install/v$VERSION ***"
+curl -skSfL https://github.com/goodtouch/rbenv-ruby-install/tarball/v$VERSION | tar xz -m --strip 1
+
+# Launching the installer
+
+./install
