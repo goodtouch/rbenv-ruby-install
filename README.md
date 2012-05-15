@@ -21,7 +21,9 @@ Open a terminal and run this command (review script [here](https://raw.github.co
 
 1. `bash <(curl https://raw.github.com/goodtouch/rbenv-ruby-install/master/install-web)`
 
-### Manual
+### Manual Install from sources
+
+Open a terminal and run those commands (git required)
 
 1. `git clone https://github.com/goodtouch/rbenv-ruby-install.git`
 2. `cd rbenv-ruby-install`
