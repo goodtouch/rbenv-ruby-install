@@ -6,6 +6,7 @@ class Installer
   ROOT = File.expand_path(File.dirname(__FILE__))
   REQUIRED_DEPENDENCIES = [
     # Don't forget to update the dependency list in the manual too.
+    Dependencies::Git,
     Dependencies::CC,
     Dependencies::CXX,
     Dependencies::Make,

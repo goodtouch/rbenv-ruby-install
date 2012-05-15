@@ -75,6 +75,31 @@ module Dependencies # :nodoc: all
     "Please install OS X GCC Installer: https://github.com/kennethreitz/osx-gcc-installer"
   include PlatformInfo
   
+  Git = Dependency.new do |dep|
+    dep.name = "Git version control system"
+    dep.define_checker do |result|
+      git = PlatformInfo.find_command('git')
+      if git
+        result.found(git)
+      else
+        result.not_found
+      end
+    end
+    if RUBY_PLATFORM =~ /linux/
+      case LINUX_DISTRO
+      when :ubuntu, :debian
+        dep.install_command = "apt-get install git-core"
+      when :rhel, :fedora, :centos
+        dep.install_command = "yum install git-core"
+      when :gentoo
+        dep.install_command = "emerge -av git"
+      end
+    elsif RUBY_PLATFORM =~ /darwin/
+      dep.install_instructions = "brew install git"
+    end
+    dep.website = "http://git-scm.com/"
+  end
+
   CC = Dependency.new do |dep|
     dep.name = "Non-broken C compiler"
     dep.define_checker do |result|
