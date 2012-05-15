@@ -16,7 +16,7 @@ You can expect this from the installation process:
 
 ### Automatic Terminal Install
 
-Open a terminal and run this command (review script [here](https://raw.github.com/goodtouch/rbenv-ruby-install/master/installer.rb))
+Open a terminal and run this command (review script [here](https://raw.github.com/goodtouch/rbenv-ruby-install/master/install-web))
 
 1. `curl https://raw.github.com/goodtouch/rbenv-ruby-install/master/install-web | sh`
 
