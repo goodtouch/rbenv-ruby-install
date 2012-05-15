@@ -18,7 +18,7 @@ You can expect this from the installation process:
 
 Open a terminal and run this command (review script [here](https://raw.github.com/goodtouch/rbenv-ruby-install/master/install-web))
 
-1. `curl https://raw.github.com/goodtouch/rbenv-ruby-install/master/install-web | sh`
+1. `bash <(curl https://raw.github.com/goodtouch/rbenv-ruby-install/master/install-web)`
 
 ### Manual
 
