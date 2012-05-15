@@ -308,7 +308,7 @@ private
       if File.exists?(File.expand_path('~/.zshenv'))
         %w(~/.zshenv ~/.zshrc)
       else
-        %w(~/.zshrc ~/.zshenv)
+        %w(~/.zshrc)
       end
     else
       %w(~/.profile)
