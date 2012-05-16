@@ -1,6 +1,6 @@
 require "#{File.dirname(__FILE__)}/platform_info"
 
-# Represents a dependency software that the WebServices requires. It's used by the
+# Represents a dependency software that Ruby requires. It's used by the
 # installer to check whether all dependencies are available. A Dependency object
 # contains full information about a dependency, such as its name, code for
 # detecting whether it is installed, and installation instructions for the
