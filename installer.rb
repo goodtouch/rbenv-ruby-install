@@ -34,6 +34,7 @@ class Installer
      :install_ruby,
      :install_gems,
     ]
+    # TODO: Add more steps depending on options
   
     steps.each do |step|
       if !self.send(step)
@@ -219,7 +220,7 @@ private
     end
   
     return true
-    # FIXME: rbenv rehash
+    # TODO: rbenv rehash
   end
   
   def show_finalization_screen
