@@ -15,7 +15,7 @@ class Installer
     Dependencies::OpenSSL_Dev,
     Dependencies::Readline_Dev
   ]
-  
+
   def start
     Dir.chdir(ROOT)
     @version = read_file("VERSION")
@@ -23,30 +23,32 @@ class Installer
     @rubybuild_destdir = "#{@rbenv_destdir}/plugins"
     @rbenv_in_path = ENV['PATH'] =~ /#{File.join(ENV['HOME'], '/.rbenv/bin')}/
     @rbenv_shims_in_path = read_file(profile) =~ /eval "\$\(rbenv init -\)"/
-  
+
     show_welcome_screen
     check_dependencies || exit(1)
-  
+
     steps = []
     steps += [
      :install_rbenv,
      :install_ruby_build,
+     :update_rbenv,
+     :update_ruby_build,
      :install_ruby,
      :install_gems,
     ]
     # TODO: Add more steps depending on options
-  
+
     steps.each do |step|
       if !self.send(step)
         exit 1
       end
     end
-  
+
     show_finalization_screen
   ensure
     reset_terminal_colors
   end
-  
+
 private
   def show_welcome_screen
     color_puts "<banner>Welcome to the rbenv ruby installer</banner>"
@@ -62,7 +64,7 @@ private
     color_puts "<b>Press Enter to continue, or Ctrl-C to abort.</b>"
     wait
   end
-  
+
   def check_dependencies
     missing_dependencies = []
     color_puts "<banner>Checking for required software...</banner>"
@@ -101,7 +103,7 @@ private
       return false
     end
   end
-  
+
   def print_dependency_installation_instructions(dep)
     color_puts " * To install <yellow>#{dep.name}</yellow>:"
     if !dep.install_command.nil?
@@ -117,7 +119,7 @@ private
       color_puts "   Search Google."
     end
   end
-  
+
   def install_rbenv
     color_print " * rbenv... "
     if File.directory?(File.expand_path(@rbenv_destdir))
@@ -136,7 +138,7 @@ private
       end
     end
   end
-  
+
   def install_ruby_build
     color_print " * ruby-build... "
     if File.directory?(File.join(File.expand_path(@rubybuild_destdir), '/ruby-build'))
@@ -147,7 +149,7 @@ private
       color_puts "\n<b>Installing ruby-build to #{@rubybuild_destdir}...</b>"
       Dir.chdir(File.expand_path(@rbenv_destdir)) do
         if !sh("mkdir -p #{File.expand_path(@rubybuild_destdir)}") ||
-          !Dir.chdir(File.expand_path(@rubybuild_destdir)){sh("git clone git://github.com/sstephenson/ruby-build.git")}
+          !Dir.chdir(File.expand_path(@rubybuild_destdir)){ sh("git clone git://github.com/sstephenson/ruby-build.git") }
           puts "*** Cannot install ruby-build"
           return false
         else
@@ -156,7 +158,27 @@ private
       end
     end
   end
-  
+
+  def update_rbenv
+    color_print " * updating to latest rbenv... "
+    if !Dir.chdir(File.expand_path(@rbenv_destdir)){ sh("git pull --rebase") }
+      puts "*** Cannot update rbenv"
+      return false
+    else
+      return true
+    end
+  end
+
+  def update_ruby_build
+    color_print " * updating to latest ruby-build... "
+    if !Dir.chdir(File.join(File.expand_path(@rubybuild_destdir), '/ruby-build')){ sh("git pull --rebase") }
+      puts "*** Cannot update ruby-build"
+      return false
+    else
+      return true
+    end
+  end
+
   def install_ruby
     color_print " * ruby-#{@version}... "
     if File.exists?(File.join(File.expand_path(@rbenv_destdir), "/versions/#{@version}/bin/ruby"))
@@ -165,7 +187,7 @@ private
     else
       color_puts "<red>not found</red>"
       color_puts "\n<b>Installing ruby-#{@version}...</b>"
-      if !sh("#{@rbenv_destdir}/bin/rbenv install #{@version}")
+      if !sh("CC=#{PlatformInfo::CC} #{@rbenv_destdir}/bin/rbenv install #{@version}")
         puts "*** Cannot install ruby-#{@version}"
         return false
       else
@@ -218,11 +240,11 @@ private
       color_puts "<b>Press ENTER to show the next screen.</b>"
       wait
     end
-  
+
     return true
     # TODO: rbenv rehash
   end
-  
+
   def show_finalization_screen
     color_puts "\n<banner>Ruby & rbenv are successfully installed!</banner>"
     color_puts "If you ever want to uninstall Ruby & rbenv, simply remove this"
@@ -256,7 +278,7 @@ private
   def color_print(message)
     print substitute_color_tags(message)
   end
-  
+
   def substitute_color_tags(data)
     data = data.gsub(%r{<b>(.*?)</b>}m, "\e[1m\\1#{DEFAULT_TERMINAL_COLORS}")
     data.gsub!(%r{<red>(.*?)</red>}m, "\e[1m\e[31m\\1#{DEFAULT_TERMINAL_COLORS}")
@@ -282,7 +304,7 @@ private
   rescue Interrupt
     exit 2
   end
-  
+
   def read_file(*filenames)
     out = ""
     filenames.to_a.flatten.each do |filename|
@@ -297,7 +319,7 @@ private
     puts command.join(' ') unless (command.last == false && !command.pop)
     return system(*command)
   end
-  
+
   def shell
     File.basename(ENV['SHELL'])
   end
@@ -316,6 +338,6 @@ private
       %w(~/.profile)
     end
   end
-  
+
 end
 Installer.new.start

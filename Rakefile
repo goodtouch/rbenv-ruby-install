@@ -31,12 +31,12 @@ end
 def create_distdir(distdir = DISTDIR)
   sh "rm -rf #{distdir}"
   sh "mkdir #{distdir}"
-  
+
   sh "cp install installer.rb platform_info.rb dependencies.rb optparse.rb VERSION #{distdir}/"
   sh "cp -r runtime #{distdir}/"
   File.open("#{distdir}/.rbenv-version", "w") do |f|
     f.write("#{VERSION}")
-  end  
+  end
 end
 
 # Returns the disk usage of the given directory, in KB.

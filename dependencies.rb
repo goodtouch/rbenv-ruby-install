@@ -9,22 +9,22 @@ class Dependency # :nodoc: all
   [:name, :install_command, :install_instructions, :install_comments,
    :website, :website_comments, :provides].each do |attr_name|
     attr_writer attr_name
-  
+
     define_method(attr_name) do
       call_init_block
       return instance_variable_get("@#{attr_name}")
     end
   end
-  
+
   def initialize(&block)
     @included_by = []
     @init_block = block
   end
-  
+
   def define_checker(&block)
     @checker = block
   end
-  
+
   def check
     call_init_block
     result = Result.new
@@ -72,9 +72,9 @@ end
 # See Dependency for more information.
 module Dependencies # :nodoc: all
   APPLE_COMPILER_INSTALL_INSTRUCTIONS =
-    "Please install OS X GCC Installer: https://github.com/kennethreitz/osx-gcc-installer"
+    "Please install OS X GCC-4.2 by running: brew tap homebrew/dupes; brew install apple-gcc42"
   include PlatformInfo
-  
+
   Git = Dependency.new do |dep|
     dep.name = "Git version control system"
     dep.define_checker do |result|
@@ -123,7 +123,7 @@ module Dependencies # :nodoc: all
     end
     dep.website = "http://gcc.gnu.org/"
   end
-  
+
   CXX = Dependency.new do |dep|
     dep.name = "Non-broken C++ compiler"
     dep.define_checker do |result|
@@ -147,7 +147,7 @@ module Dependencies # :nodoc: all
     end
     dep.website = "http://gcc.gnu.org/"
   end
-  
+
   Make = Dependency.new do |dep|
     dep.name = "The 'make' tool"
     dep.define_checker do |result|
@@ -170,7 +170,7 @@ module Dependencies # :nodoc: all
     end
     dep.website = "http://www.gnu.org/software/make/"
   end
-  
+
   Patch = Dependency.new do |dep|
     dep.name = "The 'patch' tool"
     dep.define_checker do |result|
@@ -191,7 +191,7 @@ module Dependencies # :nodoc: all
     end
     dep.website = "http://www.gnu.org/software/diffutils/"
   end
-  
+
   Zlib_Dev = Dependency.new do |dep|
     dep.name = "Zlib development headers"
     dep.define_checker do |result|
@@ -221,7 +221,7 @@ module Dependencies # :nodoc: all
     end
     dep.website = "http://www.zlib.net/"
   end
-  
+
   OpenSSL_Dev = Dependency.new do |dep|
     dep.name = "OpenSSL development headers"
     dep.define_checker do |result|
@@ -251,7 +251,7 @@ module Dependencies # :nodoc: all
     end
     dep.website = "http://www.openssl.org/"
   end
-  
+
   Readline_Dev = Dependency.new do |dep|
     dep.name = "GNU Readline development headers"
     dep.define_checker do |result|

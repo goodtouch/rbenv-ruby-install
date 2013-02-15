@@ -11,9 +11,13 @@ cd "$INSTALLER_ROOT"
 # Download the requested version of rbenv-ruby-install
 
 echo "*** Downloading rbenv-ruby-install/v$VERSION ***"
-curl -skSfL "https://github.com/goodtouch/rbenv-ruby-install/tarball/v$VERSION" | tar xz -m --strip 1
+curl -skSfL "https://github.com/goodtouch/rbenv-ruby-install/archive/v$VERSION.tar.gz" | tar xz -m --strip 1
 
-# Launching the installer
+# Remove .rbenv-version if present
+
+[[ -f ./.rbenv-version ]] && rm -rf ./.rbenv-version
+
+# Launch the installer
 
 ./install
 
