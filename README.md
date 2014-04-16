@@ -10,7 +10,7 @@ You can expect this from the installation process:
 0. Guidelines to install common dependencies
 1. **rbenv** will be installed in `~/.rbenv`.
 2. **ruby-build** will be installed in `~/.rbenv/plugins`.
-3. **ruby-1.9.3-p385** will be compiled in `~/.rbenv/versions/1.9.3-p385`.
+3. **ruby-2.1.1** will be compiled in `~/.rbenv/versions/2.1.1`.
 4. **Rubygems**, **Rake** & **Bundler** will be installed.
 
 ## Install
