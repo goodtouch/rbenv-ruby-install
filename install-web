@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-[[ -z "$VERSION" ]] && VERSION=2.1.1
+[[ -z "$VERSION" ]] && VERSION=2.1.3
 [[ -z "$INSTALLER_ROOT" ]] && INSTALLER_ROOT="$HOME/.tmprbenvinstaller"
 
 # Create the rbenv directory structure if it doesn't already exist.
